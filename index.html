@@ -1,0 +1,249 @@
+<meta charset="utf-8" http-equiv="Content-Type" name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=1.0, user-scalable=no">
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Lee</title>
+      <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+      <!-- Angular -->
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+      <!-- Angular ui bootstrap -->
+      <script data-require="ui-bootstrap@*" data-semver="1.3.0" src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-1.3.0.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.0/ui-bootstrap-tpls.js"></script>
+      <!-- Font awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <!-- jQuery -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <!-- Bootstrap js -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+       <!-- Make sure you put this AFTER Leaflet's CSS -->
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+      <!-- Leaflet fullscreen -->
+      <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+      <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+      
+      <!-- KML Library -->
+      <script src='./L.KML.js'></script>
+      <!-- KML Data -->
+      <script src="./kml/kmlData.js"></script>
+
+      <!-- CSS -->
+      <style type="text/css">
+         /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+         #mapid { 
+            height: 55%;
+         }
+      </style>
+   </head>
+   <body ng-app="myApp" ng-controller="myCtrl">
+      <div class="container-fluid">
+
+         <div style="width: 50vw; height: 50vh" id="map"></div>
+ 
+   </body>
+
+   <script>
+
+      // Code goes here - TEST
+      var app = angular.module('myApp', ['ui.bootstrap']);
+
+      // Governing app controller
+      app.controller('myCtrl', function($scope) {})
+
+      // Lee's data
+      var testData = [  
+            {
+               "resortName": "Beaver Creek Resort",
+               "state": "Colorado",
+               "region": "Rocky Mountains",
+               "city": "Beaver Creek",
+               "videos": [
+                  "mekU-2NisLE",
+                  "0hf-ARZgGN4",
+                  "e9BtCjjshHk",
+               ],
+               "position": {
+                  "lat": 39.604468135598864,
+                  "lng": -106.51679673257871
+               },
+               "officialSkiResort": true,
+               "id": "497",
+               "website": "https://www.beavercreek.com/",
+               "resortReview": {
+                  "score": 71, // must be a number not a string
+                  "link": "YdIktWJUP5E",
+                  "note": "",
+                  "price": "4",
+                  "easeOfAccess": "5",
+                  "lodging": "10",
+                  "chairLifts": "10",
+                  "runs": "9",
+                  "terrainPark": "4",
+                  "food": "10",
+                  "employees": "5",
+                  "views": "4",
+                  "wouldIGoBack": "10"
+               },
+               "skiPass": [
+                  "Epic"
+               ],
+               "mapLink": "https://skimap.org/data/497/2200/1635286154jpg_render.jpg",
+               "country": "United States"
+            },
+            {
+               "resortName": "Breckenridge Ski Resort",
+               "state": "Colorado",
+               "region": "Rocky Mountains",
+               "city": "Breckenridge",
+               "videos": [
+                  "UnOowuPAdX8",
+                  "082ZrygU3Lc",
+                  "4vvU5l0sUxU"
+               ],
+               "position": {
+                  "lat": 39.48049884182705,
+                  "lng": -106.06667208881282
+               },
+               "officialSkiResort": true,
+               "id": "510",
+               "website": "https://www.breckenridge.com/",
+               "resortReview": {
+                  "score": 72,
+                  "link": "_tSdgrJk3h8",
+                  "note": "",
+                  "price": "5",
+                  "easeOfAccess": "3",
+                  "lodging": "10",
+                  "chairLifts": "9",
+                  "runs": "8",
+                  "terrainPark": "9",
+                  "food": "6",
+                  "employees": "5",
+                  "views": "7",
+                  "wouldIGoBack": "10"
+               },
+               "skiPass": [
+                  "Epic"
+               ],
+               "mapLink": "https://skimap.org/data/510/4111/1629214360jpg_render.jpg",
+               "webcam": [
+                  {
+                  "title": "Mountain Cam",
+                  "link": "mHTTPNYltZo"
+                  },
+                  {
+                  "title": "Main Street",
+                  "link": "SH63YaIWyK0"
+                  }
+               ],
+               "country": "United States"
+            },
+            {
+               "resortName": "Copper Mountain Resort",
+               "state": "Colorado",
+               "region": "Rocky Mountains",
+               "city": "Copper Mountain",
+               "videos": [
+                  "H2ls4xImFuY",
+                  "mHLwfa6X4OU",
+                  "TzRVgRF53oU"
+               ],
+               "position": {
+                  "lat": 39.50236230347042,
+                  "lng": -106.14973588840155
+               },
+               "officialSkiResort": true,
+               "id": "509",
+               "website": "http://www.coppercolorado.com",
+               "resortReview": {
+                  "score": 83, // must be a number not a string
+                  "link": "GYhCXwxn3L4",
+                  "note": "",
+                  "price": "5",
+                  "easeOfAccess": "5",
+                  "lodging": "10",
+                  "chairLifts": "10",
+                  "runs": "8",
+                  "terrainPark": "10",
+                  "food": "10",
+                  "employees": "6",
+                  "views": "9",
+                  "wouldIGoBack": "10"
+               },
+               "skiPass": [
+                  "Ikon"
+               ],
+               "mapLink": "https://skimap.org/data/509/2200/1637367968.png",
+               "country": "United States"
+            }
+         ];
+      
+
+
+      // Make basemap
+      var map = new L.Map('map', { center: new L.LatLng(58.4, 43.0), zoom: 11 });
+      var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+      map.addLayer(osm);
+
+      // Create new kml overlay
+      var parser = new DOMParser();
+      var kml = parser.parseFromString(example1, 'text/xml');
+      var track = new L.KML(kml);
+      map.addLayer(track);
+
+      // Adjust map to show the kml
+      var bounds = track.getBounds();
+      map.fitBounds(bounds);
+
+      // My Icon 
+      var myIcon = new L.Icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+
+ 
+      for (var i = 0; i<testData.length; i++) {
+
+        // Assign the icon color (visited or not)   
+        var icon = myIcon;
+
+         // Link to the website 
+         var modalTitle = '';
+        if (testData[i].website) {
+          modalTitle = `<h4 id="firstHeading" class="firstHeading"><a href="${testData[i].website}" target="_blank" title="Resort Website">${testData[i].resortName}, ${testData[i].state || testData[i].country || (testData[i].position.lat + ' ' + testData[i].position.lng)}</a></h4>`;
+        }
+        else {
+            modalTitle = `<h4 id="firstHeading" class="firstHeading">${testData[i].resortName}, ${testData[i].state || testData[i].country || (testData[i].position.lat + ' ' + testData[i].position.lng)}</h4>`;
+        }
+
+        // HTML popup content
+        var popupContent = '<div id="content">' +
+                   '<div id="siteNotice">' +
+                   '</div>' +
+                   `<h4 id="firstHeading" class="firstHeading">${testData[i].resortName}, ${testData[i].state}</h4>` +
+                   '<div id="bodyContent">' +
+                   "<p>Content goes here</p>" +
+                   '</div>' +
+                   '</div>';
+
+                             // Marker options
+          L.marker([testData[i].position.lat, testData[i].position.lng], {icon: icon})
+            .addTo(map)
+            .bindPopup(popupContent);
+
+      }
+
+ 
+   </script>
+
+</html>
