@@ -93,7 +93,8 @@
                   "Epic"
                ],
                "mapLink": "https://skimap.org/data/497/2200/1635286154jpg_render.jpg",
-               "country": "United States"
+               "country": "United States",
+               "kmlData": example1
             },
             {
                "resortName": "Breckenridge Ski Resort",
@@ -141,65 +142,20 @@
                   "link": "SH63YaIWyK0"
                   }
                ],
-               "country": "United States"
-            },
-            {
-               "resortName": "Copper Mountain Resort",
-               "state": "Colorado",
-               "region": "Rocky Mountains",
-               "city": "Copper Mountain",
-               "videos": [
-                  "H2ls4xImFuY",
-                  "mHLwfa6X4OU",
-                  "TzRVgRF53oU"
-               ],
-               "position": {
-                  "lat": 39.50236230347042,
-                  "lng": -106.14973588840155
-               },
-               "officialSkiResort": true,
-               "id": "509",
-               "website": "http://www.coppercolorado.com",
-               "resortReview": {
-                  "score": 83, // must be a number not a string
-                  "link": "GYhCXwxn3L4",
-                  "note": "",
-                  "price": "5",
-                  "easeOfAccess": "5",
-                  "lodging": "10",
-                  "chairLifts": "10",
-                  "runs": "8",
-                  "terrainPark": "10",
-                  "food": "10",
-                  "employees": "6",
-                  "views": "9",
-                  "wouldIGoBack": "10"
-               },
-               "skiPass": [
-                  "Ikon"
-               ],
-               "mapLink": "https://skimap.org/data/509/2200/1637367968.png",
-               "country": "United States"
+               "country": "United States",
+               "kmlData": example2
             }
          ];
       
 
-
       // Make basemap
-      var map = new L.Map('map', { center: new L.LatLng(58.4, 43.0), zoom: 11 });
+      var map = new L.Map('map', { center: new L.LatLng(39.480243, -106.06667), zoom: 4 }); // Breck coords
       var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
       map.addLayer(osm);
 
       // Create new kml overlay
       var parser = new DOMParser();
-      var kml = parser.parseFromString(example1, 'text/xml');
-      var track = new L.KML(kml);
-      map.addLayer(track);
-
-      // Adjust map to show the kml
-      var bounds = track.getBounds();
-      map.fitBounds(bounds);
 
       // My Icon 
       var myIcon = new L.Icon({
@@ -214,17 +170,12 @@
  
       for (var i = 0; i<testData.length; i++) {
 
+         var kml = parser.parseFromString(testData[i].kmlData, 'text/xml'); 
+         var track = new L.KML(kml);
+         map.addLayer(track);
+
         // Assign the icon color (visited or not)   
         var icon = myIcon;
-
-         // Link to the website 
-         var modalTitle = '';
-        if (testData[i].website) {
-          modalTitle = `<h4 id="firstHeading" class="firstHeading"><a href="${testData[i].website}" target="_blank" title="Resort Website">${testData[i].resortName}, ${testData[i].state || testData[i].country || (testData[i].position.lat + ' ' + testData[i].position.lng)}</a></h4>`;
-        }
-        else {
-            modalTitle = `<h4 id="firstHeading" class="firstHeading">${testData[i].resortName}, ${testData[i].state || testData[i].country || (testData[i].position.lat + ' ' + testData[i].position.lng)}</h4>`;
-        }
 
         // HTML popup content
         var popupContent = '<div id="content">' +
@@ -232,7 +183,7 @@
                    '</div>' +
                    `<h4 id="firstHeading" class="firstHeading">${testData[i].resortName}, ${testData[i].state}</h4>` +
                    '<div id="bodyContent">' +
-                   "<p>Content goes here</p>" +
+                   '<p>Hello World</p>' +
                    '</div>' +
                    '</div>';
 
@@ -240,7 +191,6 @@
           L.marker([testData[i].position.lat, testData[i].position.lng], {icon: icon})
             .addTo(map)
             .bindPopup(popupContent);
-
       }
 
  
